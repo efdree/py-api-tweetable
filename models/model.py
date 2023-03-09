@@ -2,7 +2,7 @@ from config.database import Base
 from sqlalchemy import ForeignKey, Column, Integer, String
 from sqlalchemy.orm import relationship
 
-class User(Base):
+class UserModel(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key = True, index = True)
@@ -15,7 +15,7 @@ class User(Base):
     tweets_users = relationship("Tweet", back_populates = "users_tweets")
     comments_users = relationship("Comment", back_populates = "users_comments")
 
-class Tweet(Base):
+class TweetModel(Base):
     __tablename__ = "tweets"
 
     id = Column(Integer, primary_key = True, index = True)
@@ -26,7 +26,7 @@ class Tweet(Base):
     users_tweets = relationship("User", back_populates = "tweets_users")
     comments_tweets = relationship("Comment", back_populates = "tweets_comments")
 
-class Comment(Base):
+class CommentModel(Base):
     __tablename__ = "comments"
 
     id = Column(Integer, primary_key = True, index = True)
