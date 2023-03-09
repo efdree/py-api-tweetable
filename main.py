@@ -4,6 +4,8 @@ from middlewares.error_handler import ErrorHandler
 from fastapi.middleware.cors import CORSMiddleware
 
 from routers.user import user_router
+from routers.tweet import tweet_router
+from routers.comment import comment_router
 
 app = FastAPI()
 app.title = "Tweetable API"
@@ -25,4 +27,6 @@ app.add_middleware(CORSMiddleware,
                    )
 
 app.include_router(user_router)
+app.include_router(tweet_router)
+app.include_router(comment_router)
 Base.metadata.create_all(bind=engine)

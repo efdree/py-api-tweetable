@@ -30,6 +30,7 @@ class TweetService():
         tweet = self.db.query(TweetModel).filter(
             TweetModel.id == id).first()
         tweet.body = data.body
+        tweet.comments_count = data.comments_count
         tweet.user_id = data.user_id
         self.db.commit()
         return
