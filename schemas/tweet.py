@@ -15,7 +15,7 @@ class Tweet(BaseModel):
         schema_extra = {
             "example":{
                 "body":"Put here your tweet",
-                "created_time":"2023-03-10",
+                "created_time":"2023-03-10 10:10:10",
                 "user_id": 0
             }
         }

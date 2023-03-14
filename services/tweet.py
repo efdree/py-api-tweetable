@@ -1,3 +1,5 @@
+from sqlalchemy.orm import joinedload
+
 from models.model import TweetModel
 from schemas.tweet import Tweet
 
@@ -7,11 +9,11 @@ class TweetService():
         self.db = db
 
     def get_tweets(self):
-        result = self.db.query(TweetModel).all()
+        result = self.db.query(TweetModel).options(joinedload(TweetModel.comments_tweets)).all()
         return result
     
     def get_tweet(self, id: int):
-        result = self.db.query(TweetModel).filter(
+        result = self.db.query(TweetModel).options(joinedload(TweetModel.comments_tweets)).where(
             TweetModel.id == id).first()
         return result
     

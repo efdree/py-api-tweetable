@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi import Path
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
-from typing import List
+from typing import List, Dict
 
 from config.database import Session
 from services.user import UserService
@@ -25,14 +25,14 @@ def get_user(id: int = Path(ge=1)) -> User:
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
-@user_router.post('/user', tags=['user'], response_model=dict, status_code=201)
-def create_user(user: User) -> dict:
+@user_router.post('/user', tags=['user'], response_model=Dict, status_code=201)
+def create_user(user: User) -> Dict:
     db = Session()
     UserService(db).create_user(user)
     return JSONResponse(status_code=201, content={"message":"User Created"})
 
-@user_router.patch('/user/{id}', tags=['user'], response_model=dict, status_code=200)
-def update_user(id: int, user: User) -> dict:
+@user_router.patch('/user/{id}', tags=['user'], response_model=Dict, status_code=200)
+def update_user(id: int, user: User) -> Dict:
     db = Session()
     result = UserService(db).get_user(id)
     if not result:
