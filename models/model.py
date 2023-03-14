@@ -1,5 +1,5 @@
 from config.database import Base
-from sqlalchemy import ForeignKey, Column, Integer, String
+from sqlalchemy import ForeignKey, Column, Integer, String, Date
 from sqlalchemy.orm import relationship
 
 class UserModel(Base):
@@ -21,6 +21,8 @@ class TweetModel(Base):
     id = Column(Integer, primary_key = True, index = True)
     body = Column(String)
     comments_count = Column(Integer)
+    created_time = Column(Date)
+    
     user_id = Column(Integer, ForeignKey("users.id"))
 
     users_tweets = relationship("UserModel", back_populates = "tweets_users")
@@ -31,6 +33,7 @@ class CommentModel(Base):
 
     id = Column(Integer, primary_key = True, index = True)
     body = Column(String)
+    created_time = Column(Date)
     user_id = Column(Integer, ForeignKey("users.id"))
     tweet_id = Column(Integer, ForeignKey("tweets.id"))
 
