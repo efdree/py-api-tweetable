@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from fastapi import Path
+from fastapi import Path,Depends
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from typing import List, Dict
@@ -9,6 +9,8 @@ from services.tweet import TweetService
 from schemas.tweet import Tweet
 from services.comment import CommentService
 from schemas.comment import Comment
+
+from middlewares.jwt_bearer import JWTBearer
 
 from schemas.comment_tweet import TweetSchema
 
@@ -30,13 +32,13 @@ def get_tweet(id: int = Path(ge=1)) -> TweetSchema:
         return JSONResponse(status_code=404, content={"message": "Not Found"})
     return JSONResponse(status_code=200, content=jsonable_encoder([result_tweet]))
 
-@tweet_router.post('/tweet', tags=['tweet'], response_model=Dict, status_code=201)
+@tweet_router.post('/tweet', tags=['tweet'], response_model=Dict, status_code=201, dependencies=[Depends(JWTBearer())])
 def create_tweet(tweet: Tweet) -> Dict:
     db = Session()
     TweetService(db).create_tweet(tweet)
     return JSONResponse(status_code=201, content={"message": "Tweet Created"})
 
-@tweet_router.patch('/tweet/{id}', tags=['tweet'], response_model=Dict, status_code=200)
+@tweet_router.patch('/tweet/{id}', tags=['tweet'], response_model=Dict, status_code=200, dependencies=[Depends(JWTBearer())])
 def update_tweet(id: int, tweet: Tweet) -> Dict:
     db = Session()
     result = TweetService(db).get_tweet(id)
@@ -45,7 +47,7 @@ def update_tweet(id: int, tweet: Tweet) -> Dict:
     TweetService(db).update_tweet(id, tweet)
     return JSONResponse(status_code=200, content={"message": "Tweet Updated"})
 
-@tweet_router.delete('/tweet/{id}', tags=['tweet'], response_model=dict, status_code=200)
+@tweet_router.delete('/tweet/{id}', tags=['tweet'], response_model=dict, status_code=200, dependencies=[Depends(JWTBearer())])
 def delete_tweet(id: int) -> dict:
     db = Session()
     result = TweetService(db).get_tweet(id)
