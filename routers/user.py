@@ -40,7 +40,7 @@ def get_user(id: int = Path(ge=1)) -> User:
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
-@user_router.post('/user', tags=['user'], response_model=Dict, status_code=201, dependencies=[Depends(JWTBearer())])
+@user_router.post('/user', tags=['user'], response_model=Dict, status_code=201)
 def create_user(user: User) -> Dict:
     db = Session()
     UserService(db).create_user(user)
