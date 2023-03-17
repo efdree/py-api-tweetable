@@ -9,6 +9,7 @@ class User(BaseModel):
     username: Optional[str] = Field(min_length=1)
     name: Optional[str] = Field(min_length=1)
     avatar: Optional[str]
+    token:Optional[str]
 
     class Config:
         schema_extra = {

@@ -1,8 +1,11 @@
+from schemas.user import User
+
 from jwt import encode, decode
 
 
-def create_token(data: dict):
-    token: str = encode(payload=data, key="my_secret_key", algorithm="HS256")
+def create_token(user: User):
+    payload = {"email": user.email, "password": user.password}
+    token: str = encode(payload=payload, key="my_secret_key", algorithm="HS256")
     return token
 
 

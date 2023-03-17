@@ -11,6 +11,10 @@ class UserService():
         result = self.db.query(UserModel).all()
         return result
 
+    def get_user_login(self, email, password):
+        result = self.db.query(UserModel).where(UserModel.email == email).where(UserModel.password == password).first()
+        return result
+
     def get_user(self, id: int):
         result = self.db.query(UserModel).filter(
             UserModel.id == id).first()
