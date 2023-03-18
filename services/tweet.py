@@ -9,13 +9,12 @@ class TweetService():
         self.db = db
 
     def get_tweets(self):
-        result = self.db.query(TweetModel).options(joinedload(TweetModel.comments_tweets)).all()
+        result = self.db.query(TweetModel).options(joinedload(TweetModel.comments_tweets).joinedload(CommentModel.users_comments)).options(joinedload(TweetModel.users_tweets)).all()
         return result
     
     def get_tweet(self, id: int):
-        #result = self.db.query(TweetModel).options(joinedload(TweetModel.comments_tweets)).options(joinedload(TweetModel.users_tweets)).where(
-        #    TweetModel.id == id).first()
-        result = self.db.query(TweetModel).join(CommentModel.tweets_comments).where(TweetModel.id == id).first()
+        result = self.db.query(TweetModel).options(joinedload(TweetModel.comments_tweets).joinedload(CommentModel.users_comments)).options(joinedload(TweetModel.users_tweets)).where(
+              TweetModel.id == id).first()
         return result
     
     def get_tweet_by_user(self, user_id: int):
