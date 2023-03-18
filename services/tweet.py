@@ -1,6 +1,6 @@
 from sqlalchemy.orm import joinedload
 
-from models.model import TweetModel, CommentModel, UserModel
+from models.model import TweetModel, CommentModel
 from schemas.tweet import Tweet
 
 class TweetService():

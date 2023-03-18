@@ -11,7 +11,6 @@ from schemas.comment import Comment
 from middlewares.jwt_bearer import JWTBearer
 
 from services.tweet import TweetService
-from schemas.tweet import Tweet
 
 comment_router = APIRouter()
 

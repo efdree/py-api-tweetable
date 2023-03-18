@@ -8,7 +8,6 @@ from config.database import Session
 from services.tweet import TweetService
 from schemas.tweet import Tweet
 from services.comment import CommentService
-from schemas.comment import Comment
 
 from middlewares.jwt_bearer import JWTBearer
 
