@@ -40,11 +40,11 @@ def get_user(id: int = Path(ge=1)) -> User:
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
-@user_router.post('/user', tags=['user'], response_model=Dict, status_code=201)
-def create_user(user: User) -> Dict:
+@user_router.post('/user', tags=['user'], response_model=User, status_code=201)
+def create_user(user: User) -> User:
     db = Session()
-    UserService(db).create_user(user)
-    return JSONResponse(status_code=201, content={"message":"User Created"})
+    result = UserService(db).create_user(user)
+    return JSONResponse(status_code=201, content=jsonable_encoder(result))
 
 @user_router.patch('/user/{id}', tags=['user'], response_model=Dict, status_code=200 , dependencies=[Depends(JWTBearer())])
 def update_user(id: int, user: User) -> Dict:
